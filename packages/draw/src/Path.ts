@@ -254,7 +254,7 @@ export class Path extends Shape {
             x: lastPoint.x,
             y: lastPoint.y,
             color: [lastPoint.r, lastPoint.g, lastPoint.b],
-            amount: Math.floor(this.waitAmount * relativeAngle),
+            amount: Math.floor(this.waitAmount! * relativeAngle),
           });
           wait = waitShape.draw();
         }

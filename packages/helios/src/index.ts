@@ -18,8 +18,13 @@ const MIN_PPS = 7;
 const MAX_PPS = 65535;
 
 export class Helios extends Device {
+
+  constructor (private dacNum:number = 0) {
+    super();
+  }
+
   private interval?: NodeJS.Timeout;
-  private dacNum: number = 0;
+  //private dacNum: number = 0;
   private sendNextImmediate: boolean = false;
   private lastPoint?: Point;
   /*
@@ -33,6 +38,10 @@ export class Helios extends Device {
     b: 0,
   };
    */
+
+
+  private previousPoints:Point[] = [];
+
 
   private stats = {
     startTime: 0,
@@ -74,22 +83,38 @@ export class Helios extends Device {
       maxJump: 0,
       maxSpeed: 0,
       maxAccel: 0,
-    }
+    },
+    notReadyCount: 0
   };
+
+  static openDevices():number {
+    const deviceCount: number = heliosLib.openDevices();
+    // heliosLib.SetLibusbDebugLogLevel(2);
+    return deviceCount;
+  }
+
+  static getFirmwareVersion(deviceNumber:number):number {
+    return heliosLib.GetFirmwareVersion(deviceNumber);
+  }
+
+  static listDevices():number[] {
+    const serialNumbers: number[] = [];
+    return serialNumbers;
+  }
 
   async start() {
     this.stop();
-    const devices = heliosLib.openDevices();
-    if (devices) {
+    // const devices = heliosLib.openDevices();
+    // if (devices) {
       heliosLib.setShutter(this.dacNum, true);
       return true;
-    }
-    return false;
+    // }
+    // return false;
   }
 
   stop() {
     heliosLib.setShutter(this.dacNum, false);
-    heliosLib.closeDevices();
+    // heliosLib.closeDevices();
     if (this.interval) {
       clearInterval(this.interval);
     }
@@ -146,20 +171,25 @@ export class Helios extends Device {
       return FrameResult.Empty;
     }
 
+    //console.log("dacnum " + this.dacNum + "  points qty " + points.length);
     if (!this.sendNextImmediate && heliosLib.getStatus(this.dacNum) !== 1) {
+      //console.log(heliosLib.getStatus(this.dacNum));
       return FrameResult.NotReady;
     }
-
+/*
     const frameMode = this.sendNextImmediate
       ? heliosLib.FrameMode.ImmediateSingle
       : heliosLib.FrameMode.QueueSingle;
-
+*/
     this.sendNextImmediate = false;
 
     const limitedPoints = points.length > MAX_POINTS ? points.slice(0, MAX_POINTS) : points;
+    if (limitedPoints !== points) {
+      console.log("Had to limit size of points array");
+    }
     const converted = limitedPoints.map(this.convertPoint);
     const success = heliosLib.writeFrame(this.dacNum, pointsRate,
-     frameMode, converted, converted.length);
+     /* tp   frameMode*/ 0 as heliosLib.FrameMode, converted, converted.length);
 
     return success === 1 ? FrameResult.Success : FrameResult.Fail;
   }
@@ -183,25 +213,45 @@ export class Helios extends Device {
 
     this.interval = setInterval(() => {
       const points = scene.points;
-      const result = this.sendFrame(points, this.pointsRate);
 
-      this.stats.lastFrame.points = points.length;
-      this.stats.lastFrame.result = result;
-      this.stats.lastFrame.drawMs = 1000 * points.length / this.pointsRate;
-      this.stats.points[result] += points.length;
-      ++this.stats.frames[result];
+      if (!this.pointsArraysEqual(points, this.previousPoints)) {
 
-      this.recordContentStats(points);
+        const result = this.sendFrame(points, this.pointsRate);
 
-      switch (result) {
-        case FrameResult.Fail:
-          console.error("Helios failed sending a frame");
-          break;
-        case FrameResult.NotReady:
-          console.error("Helios not ready.");
-          break;
+        this.stats.lastFrame.points = points.length;
+        this.stats.lastFrame.result = result;
+        this.stats.lastFrame.drawMs = 1000 * points.length / this.pointsRate;
+        this.stats.points[result] += points.length;
+        ++this.stats.frames[result];
+  
+        this.recordContentStats(points);
+  
+        switch (result) {
+          case FrameResult.Fail:
+            console.error("Helios failed sending a frame");
+            break;
+          case FrameResult.NotReady:
+            // console.error(`Helios not ready. ${this.dacNum} ${++this.stats.notReadyCount}`);
+            break;
+        }
+
       }
+      else {
+        //console.log("skipped sending frame");
+      }
+      this.previousPoints = points;
+
     }, frameTime);
+  }
+
+  private pointsArraysEqual(pointsA:Point[], pointsB:Point[]):boolean {
+    if (pointsA.length != pointsB.length) {
+      return false;
+    }
+    for (var i = 0; i < pointsA.length; ++i) {
+      if (pointsA[i] !== pointsB[i]) return false;
+    }
+    return true;
   }
 
   private calculateStats() {

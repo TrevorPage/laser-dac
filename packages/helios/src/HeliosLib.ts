@@ -52,6 +52,14 @@ const HeliosLib = ffi.Library(libPath, {
   //numOfPoints: number of points in the frame
   //returns 1 if successful
   WriteFrame: ['int', ['uint', 'int', 'uint', HeliosPointArray, 'int']],
+
+  //Returns the firmware version number. Returns -1 if communcation failed.
+  GetFirmwareVersion: ['int', ['int']],
+
+  //Sets libusb debug log level
+  //See libusb.h for log level values
+  SetLibusbDebugLogLevel: ['int', ['int']]
+
 });
 
 export function openDevices(): number {
@@ -85,6 +93,14 @@ export function writeFrame(
   numOfPoints: number
 ): number {
   return HeliosLib.WriteFrame(dacNum, pps, flags, points, numOfPoints);
+}
+
+export function GetFirmwareVersion(dacNum: number):number {
+  return HeliosLib.GetFirmwareVersion(dacNum);
+}
+
+export function SetLibusbDebugLogLevel(level:number):number {
+  return HeliosLib.SetLibusbDebugLogLevel(level);
 }
 
 export interface IPoint {

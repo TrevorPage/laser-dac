@@ -95,7 +95,7 @@ export class DAC {
     const allDeviceStats = this.devices.reduce((stats, device) => {
       const deviceStats = device.getStats();
       if (deviceStats) {
-        stats[device.constructor.name] = deviceStats;
+        (stats as any)[device.constructor.name] = deviceStats;
       }
       return stats;
     }, {});

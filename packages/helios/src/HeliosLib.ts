@@ -16,9 +16,21 @@ const HeliosPoint = Struct({
 
 const HeliosPointArray = ArrayType(HeliosPoint);
 
+const libraryName = (() => {
+  switch(process.arch) {
+    case 'arm64':
+      return "libHeliosDACAPI-arm64";
+    case 'x64':
+      return "libHeliosDACAPI-x64";    
+    default:
+      return "libHeliosDACAPI";
+  }
+})();
+ 
+
 // Windows 32-bit is not supported currently
 const libPath = path
-  .join(__dirname, '../sdk/libHeliosDACAPI')
+  .join(__dirname, '../sdk/' + libraryName)
   // Super super dirty hack to make this work with Electron; native dependencies
   // dont'get placed inside the "app.asar" bundle, but instead get placed in a separate directory called "app.asar.unpacked"
   .replace('app.asar', 'app.asar.unpacked');

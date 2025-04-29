@@ -31,7 +31,7 @@
     "ref-struct-di": "^1.1.0"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
     "watch": "tsc -p tsconfig.build.json --watch",
     "prepublishOnly": "npm run -s build"
   }

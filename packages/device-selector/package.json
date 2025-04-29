@@ -28,7 +28,7 @@
     "@laser-dac/simulator": "^0.3.3"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
     "watch": "tsc -p tsconfig.build.json --watch",
     "prepublishOnly": "npm run -s build"
   }

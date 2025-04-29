@@ -20,7 +20,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
     "watch": "tsc -p tsconfig.build.json --watch",
     "manual-test": "ts-node test.ts",
     "prepublishOnly": "npm run -s build"

@@ -17,7 +17,8 @@
     "publish": "lerna publish",
     "build": "lerna run build",
     "test": "lerna run test",
-    "watch": "lerna run --parallel watch"
+    "watch": "lerna run --parallel watch",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {

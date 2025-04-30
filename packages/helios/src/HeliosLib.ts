@@ -17,6 +17,11 @@ const HeliosPoint = Struct({
 const HeliosPointArray = ArrayType(HeliosPoint);
 
 const libraryName = (() => {
+  console.log('process.platform', process.platform);
+  console.log('process.arch', process.arch);
+  if (process.platform === 'win32') {
+    return "libHeliosDACAPI.dll"; // "HeliosLaserDAC.dll"; //"HeliosLaserDAC.dll";
+  }
   switch(process.arch) {
     case 'arm64':
       return "libHeliosDACAPI-arm64";
@@ -28,12 +33,16 @@ const libraryName = (() => {
 })();
  
 
+console.log('libraryName', libraryName);
+
 // Windows 32-bit is not supported currently
 const libPath = path
   .join(__dirname, '../sdk/' + libraryName)
   // Super super dirty hack to make this work with Electron; native dependencies
   // dont'get placed inside the "app.asar" bundle, but instead get placed in a separate directory called "app.asar.unpacked"
   .replace('app.asar', 'app.asar.unpacked');
+
+console.log('libPath', libPath);
 
 const HeliosLib = ffi.Library(libPath, {
   //initializes drivers, opens connection to all devices.
@@ -66,11 +75,11 @@ const HeliosLib = ffi.Library(libPath, {
   WriteFrame: ['int', ['uint', 'int', 'uint', HeliosPointArray, 'int']],
 
   //Returns the firmware version number. Returns -1 if communcation failed.
-  GetFirmwareVersion: ['int', ['int']],
+  //GetFirmwareVersion: ['int', ['int']],
 
   //Sets libusb debug log level
   //See libusb.h for log level values
-  SetLibusbDebugLogLevel: ['int', ['int']]
+  //SetLibusbDebugLogLevel: ['int', ['int']]
 
 });
 

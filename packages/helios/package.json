@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@laser-dac/core": "^0.4.2",
+    "@laser-dac/draw": "^0.6.1",
     "@types/ffi-napi": "^2.4.2",
     "@types/ref-napi": "^1.4.1",
     "ffi-napi": "^3.0.0",

@@ -19,6 +19,10 @@ export class Simulator extends Device {
   wss?: WebSocketServer;
   interval?: NodeJS.Timer;
 
+  constructor(private port = PORT) {
+    super();
+  }
+
   start(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.server = http.createServer();
@@ -27,8 +31,8 @@ export class Simulator extends Device {
       this.wss = new WebSocketServer({ server: this.server });
 
       this.server.on('request', app);
-      this.server.listen(PORT, function () {
-        console.log(`Started simulator on http://localhost:${PORT}`);
+      this.server.listen(this.port,  () => {
+        console.log(`Started simulator on http://localhost:${this.port}`);
         resolve(true);
       });
     });

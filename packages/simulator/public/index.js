@@ -114,8 +114,9 @@ function render() {
 requestAnimationFrame(render);
 
 const host = window.document.location.host.replace(/:.*/, '');
+const port = window.document.location.port;
 const ws = new WebsocketClient();
-ws.open('ws://' + host + ':8080');
+ws.open('ws://' + host + ':' + port);
 ws.onmessage = function (event) {
   const payload = JSON.parse(event.data);
   if (payload.type === 'POINTS') {

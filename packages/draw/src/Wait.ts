@@ -1,5 +1,5 @@
 import { Shape } from './Shape';
-import { Point, Color, ColorInput } from './Point';
+import { Point, ColorInput } from './Point';
 
 interface WaitOptions {
   x: number;

@@ -29,3 +29,7 @@ export function resolveColor(color: ColorInput, x: number, y: number): Color {
     return color.getColor(x, y);
   }
 }
+export interface ColorStop {
+  offset: number; // from 0 to 1
+  color: string | Color; // accepts hex, hsl, or [r,g,b]
+}

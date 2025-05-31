@@ -1,6 +1,6 @@
 import { Shape } from './Shape';
 import { SceneOptions } from './Scene';
-import { Point, Color, ColorInput } from './Point';
+import { Point, ColorInput } from './Point';
 import Bezier = require('bezier-js');
 
 interface BezierCoordinates {

@@ -1,5 +1,5 @@
 import { Shape } from './Shape';
-import { Point, Color, ColorInput } from './Point';
+import { Point, ColorInput } from './Point';
 import { SceneOptions } from './Scene';
 import { Line } from './Line';
 import { Wait } from './Wait';

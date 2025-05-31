@@ -1,5 +1,5 @@
 import { Shape } from './Shape';
-import { Color, Point } from './Point';
+import { ColorInput, Point } from './Point';
 import { SceneOptions } from './Scene';
 import { Wait } from './Wait';
 
@@ -9,7 +9,7 @@ interface CircleOptions {
   x: number;
   y: number;
   radius: number;
-  color: Color;
+  color: ColorInput;
   extentAngle?: number;
   startAngle?: number;
 }
@@ -18,7 +18,7 @@ export class Circle extends Shape {
   x: number;
   y: number;
   radius: number;
-  color: Color;
+  color: ColorInput;
   extentAngle?: number;
   startAngle?: number;  
 

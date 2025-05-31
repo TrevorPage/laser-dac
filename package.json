@@ -25,5 +25,8 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
+  },
+  "dependencies": {
+    "colord": "^2.9.3"
   }
 }

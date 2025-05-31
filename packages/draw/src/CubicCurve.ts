@@ -1,6 +1,6 @@
 import { Shape } from './Shape';
 import { SceneOptions } from './Scene';
-import { Point, Color } from './Point';
+import { Point, Color, ColorInput } from './Point';
 import Bezier = require('bezier-js');
 
 interface BezierCoordinates {
@@ -15,13 +15,13 @@ interface BezierCoordinates {
 interface CubicCurveOptions {
   from: BezierCoordinates;
   to: BezierCoordinates;
-  color: Color;
+  color: ColorInput;
 }
 
 export class CubicCurve extends Shape {
   from: BezierCoordinates;
   to: BezierCoordinates;
-  color: Color;
+  color: ColorInput;
 
   constructor(options: CubicCurveOptions) {
     super();

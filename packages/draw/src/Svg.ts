@@ -3,7 +3,7 @@ import { Shape } from './Shape';
 import { SceneOptions } from './Scene';
 import { parse, Node } from 'svg-parser';
 import { Path } from './Path';
-import { Color, Point } from './Point';
+import { ColorInput, Color, Point } from './Point';
 import { hexToRgb, flatten } from './helpers';
 
 const DEFAULT_COLOR: Color = [0, 1, 0];
@@ -13,7 +13,7 @@ interface SvgOptions {
   x: number;
   y: number;
   file: Node;
-  color?: Color;
+  color?: ColorInput;
   size?: number;
   waitAmount?: number;
   blankingAmount?: number;
@@ -24,7 +24,7 @@ export class Svg extends Shape {
   y: number;
   size: number;
   file: Node;
-  color: Color;
+  color: ColorInput;
   waitAmount: number | undefined;
   blankingAmount: number | undefined;
   private pathNodes: Node[] = [];
@@ -55,7 +55,7 @@ export class Svg extends Shape {
     };
   }
 
-  parseHexToRelativeColor(color: string): Color {
+  parseHexToRelativeColor(color: string): ColorInput {
     const rgb = hexToRgb(color);
     if (rgb) {
       return [rgb[0] / 255, rgb[1] / 255, rgb[2] / 255];

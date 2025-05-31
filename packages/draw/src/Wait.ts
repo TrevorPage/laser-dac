@@ -1,17 +1,17 @@
 import { Shape } from './Shape';
-import { Point, Color } from './Point';
+import { Point, Color, ColorInput } from './Point';
 
 interface WaitOptions {
   x: number;
   y: number;
-  color?: Color;
+  color?: ColorInput;
   amount: number;
 }
 
 export class Wait extends Shape {
   x: number;
   y: number;
-  color?: Color;
+  color?: ColorInput;
   amount: number;
 
   constructor(options: WaitOptions) {

@@ -1,5 +1,5 @@
 import { Shape } from './Shape';
-import { Point, Color } from './Point';
+import { Point, Color, ColorInput } from './Point';
 import { Wait } from './Wait';
 import { SceneOptions } from './Scene';
 
@@ -11,7 +11,7 @@ interface Coordinates {
 interface LineOptions {
   from: Coordinates;
   to: Coordinates;
-  color: Color;
+  color: ColorInput;
   blankBefore?: boolean;
   blankAfter?: boolean;
   waitAmount?: number;
@@ -21,7 +21,7 @@ interface LineOptions {
 export class Line extends Shape {
   from: Coordinates;
   to: Coordinates;
-  color: Color;
+  color: ColorInput;
   blankBefore: boolean;
   blankAfter: boolean;
 

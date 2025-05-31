@@ -1,5 +1,5 @@
 import { Shape } from './Shape';
-import { Point, Color } from './Point';
+import { Point, Color, ColorInput } from './Point';
 import { SceneOptions } from './Scene';
 import { Line } from './Line';
 import { Wait } from './Wait';
@@ -15,7 +15,7 @@ interface PathOptions {
   y?: number;
   width?: number;
   height?: number;
-  color: Color;
+  color: ColorInput;
   path: string;
   waitAmount?: number;
   blankingAmount?: number;
@@ -26,7 +26,7 @@ export class Path extends Shape {
   y: number;
   width: number;
   height: number;
-  color: Color;
+  color: ColorInput;
   // Example: "M0.67 0 L0.33 0.88 L1 0.88 Z" draws a triangle
   // Works exactly like SVG path. Learn everything about it: https://css-tricks.com/svg-path-syntax-illustrated-guide/
   path: string;

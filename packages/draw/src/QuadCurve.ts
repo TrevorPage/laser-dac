@@ -1,5 +1,5 @@
 import { Shape } from './Shape';
-import { Point, Color } from './Point';
+import { Point, Color, ColorInput } from './Point';
 import { SceneOptions } from './Scene';
 import Bezier = require('bezier-js');
 
@@ -12,14 +12,14 @@ interface QuadCurveOptions {
   from: BezierCoordinates;
   to: BezierCoordinates;
   control: BezierCoordinates;
-  color: Color;
+  color: ColorInput;
 }
 
 export class QuadCurve extends Shape {
   from: BezierCoordinates;
   to: BezierCoordinates;
   control: BezierCoordinates;
-  color: Color;
+  color: ColorInput;
 
   constructor(options: QuadCurveOptions) {
     super();

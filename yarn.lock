@@ -460,7 +460,7 @@
     "@laser-dac/laserdock" "^0.4.0"
     "@laser-dac/simulator" "^0.3.3"
 
-"@laser-dac/draw@file:C:\\git\\laser-dac-trevorpage-fork\\packages\\draw":
+"@laser-dac/draw@^0.6.1", "@laser-dac/draw@file:C:\\git\\laser-dac-trevorpage-fork\\packages\\draw":
   version "0.6.1"
   resolved "file:packages/draw"
   dependencies:

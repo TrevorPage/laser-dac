@@ -1,6 +1,7 @@
 import { colord } from "colord";
 import { Color, ColorSource, ColorStop, Point } from "./Point";
 
+
 function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * t;
 }
@@ -13,14 +14,14 @@ function interpolateColor(c1: Color, c2: Color, t: number): Color {
   ];
 }
 
-export class RadialGradient implements ColorSource {
-  center: Point;
-  radius: number;
+export class LinearGradient implements ColorSource {
+  from: Point;
+  to: Point;
   colorStops: { offset: number; color: Color }[];
 
-  constructor(center: Point, radius: number, colorStops: ColorStop[]) {
-    this.center = center;
-    this.radius = radius;
+  constructor(from: Point, to: Point, colorStops: ColorStop[]) {
+    this.from = from;
+    this.to = to;
 
     this.colorStops = colorStops
       .map(cs => ({
@@ -39,10 +40,12 @@ export class RadialGradient implements ColorSource {
   }
 
   private computeOffset(x: number, y: number): number {
-    const dx = x - this.center.x;
-    const dy = y - this.center.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    const t = dist / this.radius;
+    const dx = this.to.x - this.from.x;
+    const dy = this.to.y - this.from.y;
+    const lenSq = dx * dx + dy * dy;
+    if (lenSq === 0) return 0;
+
+    const t = ((x - this.from.x) * dx + (y - this.from.y) * dy) / lenSq;
     return Math.max(0, Math.min(1, t));
   }
 

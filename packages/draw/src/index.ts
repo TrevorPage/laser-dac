@@ -10,3 +10,6 @@ export { rotate } from './transformers/rotate';
 export { distort } from './transformers/distort';
 export { clamp, monochrome } from './helpers';
 export { Svg, loadSvgFile } from './Svg';
+export { LinearGradient } from './LinearGradient';
+export { RadialGradient } from './RadialGradient'; 
+export { GradientPresets } from './GradientPresets';
